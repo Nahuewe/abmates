@@ -1,0 +1,348 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="AB Mates | Catalogo">
+  <!-- HEADER -->
+  <header
+    class="sticky top-0 z-40 bg-linear-to-r from-green-950 via-green-900 to-green-950 shadow-xl"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-5 flex items-center gap-4">
+      <div class="relative">
+        <div
+          class="absolute inset-0 bg-amber-400 rounded-full blur-md opacity-40"
+        >
+        </div>
+        <img
+          src="/abmates.jpg"
+          class="relative h-14 w-14 rounded-full shadow-2xl ring-4 ring-amber-400/30"
+        />
+      </div>
+      <div class="leading-tight">
+        <h1 class="font-black tracking-tight text-2xl text-white">AB Mates</h1>
+        <p class="text-sm text-amber-200/90 font-medium">
+          Mates • Termos • Accesorios
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section
+    class="px-4 pt-20 pb-16 text-center relative overflow-hidden bg-linear-to-b from-green-50 via-amber-50/30 to-white"
+  >
+    <div class="absolute inset-0 opacity-30">
+      <div
+        class="absolute top-20 left-1/4 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl"
+      >
+      </div>
+    </div>
+
+    <div class="relative">
+      <span
+        class="inline-block mb-6 text-xs font-bold uppercase tracking-[0.3em] text-green-800 bg-green-100 px-5 py-2 rounded-full"
+      >
+        Catálogo artesanal
+      </span>
+
+      <h2
+        class="text-5xl sm:text-7xl font-black mb-6 leading-[1.1] tracking-tight"
+      >
+        Viví el ritual<br />
+        <span
+          class="bg-linear-to-r from-green-700 via-green-600 to-emerald-600 bg-clip-text text-transparent"
+          >del mate</span
+        >
+      </h2>
+
+      <p
+        class="text-neutral-700 text-lg max-w-2xl mx-auto leading-relaxed font-medium"
+      >
+        Productos seleccionados para acompañarte todos los días.<br />
+        <span class="text-green-700"
+          >Diseño, calidad y tradición argentina.</span
+        >
+      </p>
+    </div>
+  </section>
+
+  <!-- FILTROS -->
+  <section class="px-4 -mt-8 relative z-10">
+    <div
+      class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-6 grid gap-4 sm:grid-cols-2 border border-green-100"
+    >
+      <div class="relative">
+        <svg
+          class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          id="searchInput"
+          placeholder="Buscar producto…"
+          class="w-full pl-12 pr-5 py-4 rounded-2xl border-2 border-neutral-200 text-sm
+         bg-neutral-50 focus:bg-white font-medium
+         focus:outline-none focus:ring-4 focus:ring-green-500/20 focus:border-green-500 transition-all"
+        />
+      </div>
+
+      <select
+        id="categoryFilter"
+        class="px-5 py-4 rounded-2xl border-2 border-neutral-200 text-sm font-medium
+               bg-neutral-50 focus:bg-white
+               focus:outline-none focus:ring-4 focus:ring-green-500/20 focus:border-green-500 transition-all"
+      >
+        <option value="all">Todas las categorías</option>
+        <option value="mate">Mates</option>
+        <option value="termo">Termos</option>
+        <option value="bombilla">Bombillas</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <main class="px-4 py-12">
+    <div
+      id="products"
+      class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
+    >
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div
+    id="modal"
+    class="fixed inset-0 hidden bg-black/70 backdrop-blur-md z-50
+           items-end sm:items-center justify-center"
+  >
+    <div
+      class="bg-white w-full sm:max-w-xl rounded-t-[2.8rem] sm:rounded-[2.8rem]
+         overflow-hidden shadow-2xl animate-slide"
+    >
+      <div class="relative">
+        <img id="modalImg" class="w-full h-72 object-cover" />
+        <button
+          id="closeModal"
+          class="absolute top-4 right-4 bg-white/90 hover:bg-white
+                 w-10 h-10 rounded-full flex items-center justify-center
+                 shadow-lg transition"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="p-7">
+        <span
+          id="modalCategory"
+          class="inline-block mb-4 text-[11px] uppercase tracking-widest
+                 bg-linear-to-r from-green-600 to-emerald-600 text-white px-4 py-1.5 rounded-full font-bold"
+        ></span>
+
+        <h3 id="modalTitle" class="text-3xl font-black tracking-tight"></h3>
+
+        <p id="modalDesc" class="text-neutral-600 mt-4 text-sm leading-relaxed">
+        </p>
+
+        <p id="modalPrice" class="text-4xl font-black text-green-700 mt-6"></p>
+
+        <a
+          id="modalWhatsapp"
+          target="_blank"
+          class="mt-8 block w-full text-center
+         bg-linear-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
+         text-white font-black py-4 rounded-2xl uppercase tracking-wide
+         transition-all active:scale-[0.97] shadow-lg shadow-green-600/30"
+        >
+          💬 Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const WHATSAPP_NUMBER = "5493834053417";
+
+    const products = [
+      {
+        name: "Mate Imperial",
+        description: "Mate imperial forrado en cuero con virola de alpaca.",
+        price: "$18.000",
+        category: "mate",
+        image: "/images/mate1.jpg",
+      },
+      {
+        name: "Termo Acero 1L",
+        description: "Termo de acero inoxidable, mantiene el calor por horas.",
+        price: "$25.000",
+        category: "termo",
+        image: "/images/termo1.jpg",
+      },
+      {
+        name: "Bombilla Alpaca",
+        description: "Bombilla resistente, excelente filtrado.",
+        price: "$4.500",
+        category: "bombilla",
+        image: "/images/bombilla1.jpg",
+      },
+    ];
+
+    const modalImg = document.getElementById("modalImg") as HTMLImageElement;
+    const modalTitle = document.getElementById("modalTitle") as HTMLElement;
+    const modalDesc = document.getElementById("modalDesc") as HTMLElement;
+    const modalPrice = document.getElementById("modalPrice") as HTMLElement;
+    const modalCategory = document.getElementById(
+      "modalCategory",
+    ) as HTMLElement;
+    const modalWhatsapp = document.getElementById(
+      "modalWhatsapp",
+    ) as HTMLAnchorElement;
+    const modal = document.getElementById("modal") as HTMLElement;
+    const closeModalBtn = document.getElementById(
+      "closeModal",
+    ) as HTMLButtonElement;
+    const container = document.getElementById("products") as HTMLElement;
+    const search = document.getElementById("searchInput") as HTMLInputElement;
+    const filter = document.getElementById(
+      "categoryFilter",
+    ) as HTMLSelectElement;
+
+    if (
+      !container ||
+      !search ||
+      !filter ||
+      !modal ||
+      !modalImg ||
+      !modalTitle ||
+      !modalDesc ||
+      !modalPrice ||
+      !modalCategory ||
+      !modalWhatsapp ||
+      !closeModalBtn
+    ) {
+      console.warn("Elementos del DOM no encontrados");
+    } else {
+      function whatsappLink(name: any[]) {
+        const text = `Hola! Quería consultar el precio de *${name}*`;
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      }
+
+      function render(list: any[]) {
+        container.innerHTML = "";
+
+        list.forEach((p) => {
+          const card = document.createElement("div");
+          card.className =
+            "group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 border border-neutral-100";
+
+          card.innerHTML = `
+          <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200">
+            <img
+              src="${p.image}"
+              alt="${p.name}"
+              class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-2"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <span class="absolute top-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em]
+                         bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg">
+              ${p.category}
+            </span>
+          </div>
+
+          <div class="p-6">
+            <h4 class="text-xl font-black tracking-tight text-neutral-900">${p.name}</h4>
+            <p class="text-green-700 font-black text-2xl mt-3">${p.price}</p>
+
+            <div class="mt-6 grid gap-3">
+              <a
+                href="${whatsappLink(p.name)}"
+                target="_blank"
+                class="text-center bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
+                       text-white py-4 rounded-2xl text-sm font-black uppercase tracking-wide
+                       transition-all duration-300 active:scale-[0.96] shadow-lg shadow-green-600/30 hover:shadow-xl hover:shadow-green-600/40"
+              >
+                💬 Consultar por WhatsApp
+              </a>
+            </div>
+          </div>
+        `;
+
+          const detailsBtn = card.querySelector(".detailsBtn");
+          if (detailsBtn) {
+            detailsBtn.addEventListener("click", () => openModal(p));
+          }
+
+          container.appendChild(card);
+        });
+      }
+
+      function openModal(p: any) {
+        modalImg.src = p.image;
+        modalImg.alt = p.name;
+        modalTitle.textContent = p.name;
+        modalDesc.textContent = p.description;
+        modalPrice.textContent = p.price;
+        modalCategory.textContent = p.category;
+        modalWhatsapp.href = whatsappLink(p.name);
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      function applyFilters() {
+        const s = search.value.toLowerCase();
+        const c = filter.value;
+
+        render(
+          products.filter(
+            (p) =>
+              p.name.toLowerCase().includes(s) &&
+              (c === "all" || p.category === c),
+          ),
+        );
+      }
+
+      search.addEventListener("input", applyFilters);
+      filter.addEventListener("change", applyFilters);
+      closeModalBtn.addEventListener("click", closeModal);
+      modal.addEventListener(
+        "click",
+        (e) => e.target === modal && closeModal(),
+      );
+
+      render(products);
+    }
+  </script>
+
+  <style>
+    @keyframes slide {
+      from {
+        transform: translateY(32px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .animate-slide {
+      animation: slide 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</MainLayout>

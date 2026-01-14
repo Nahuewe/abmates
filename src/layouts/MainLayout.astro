@@ -1,0 +1,21 @@
+---
+import "../styles/global.css";
+const { title = "AB Mates" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="/abmates.jpg" />
+  </head>
+
+  <body
+    class="bg-linear-to-b from-[#f5f1eb] via-[#ece6dd] to-[#e3dbcf] text-neutral-800 antialiased"
+  >
+    <slot />
+  </body>
+</html>
