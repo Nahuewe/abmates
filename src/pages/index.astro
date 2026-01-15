@@ -207,137 +207,108 @@ import MainLayout from "../layouts/MainLayout.astro";
   </div>
 
   <!-- JS -->
-  <script>
+  <script type="module">
+    import { supabase } from "/src/lib/supabase";
+
     const WHATSAPP_NUMBER = "5493834053417";
+    let products = [];
 
-    const products = [
-      {
-        name: "Mate Imperial",
-        description: "Mate imperial forrado en cuero con virola de alpaca.",
-        price: "$18.000",
-        category: "mate",
-        image: "/images/mate1.jpg",
-        status: "new", // nuevo
-      },
-      {
-        name: "Termo Acero 1L",
-        description: "Termo de acero inoxidable, mantiene el calor por horas.",
-        price: "$25.000",
-        category: "termo",
-        image: "/images/termo1.jpg",
-        status: "limited", // últimos disponibles
-      },
-      {
-        name: "Bombilla Alpaca",
-        description: "Bombilla resistente, excelente filtrado.",
-        price: "$4.500",
-        category: "bombilla",
-        image: "/images/bombilla1.jpg",
-      },
-    ];
+    const container = document.getElementById("products");
+    const search = document.getElementById("searchInput");
+    const filter = document.getElementById("categoryFilter");
 
-    const modalImg = document.getElementById("modalImg") as HTMLImageElement;
-    const modalTitle = document.getElementById("modalTitle") as HTMLElement;
-    const modalDesc = document.getElementById("modalDesc") as HTMLElement;
-    const modalPrice = document.getElementById("modalPrice") as HTMLElement;
-    const modalCategory = document.getElementById(
-      "modalCategory",
-    ) as HTMLElement;
-    const modalWhatsapp = document.getElementById(
-      "modalWhatsapp",
-    ) as HTMLAnchorElement;
-    const modal = document.getElementById("modal") as HTMLElement;
-    const closeModalBtn = document.getElementById(
-      "closeModal",
-    ) as HTMLButtonElement;
-    const container = document.getElementById("products") as HTMLElement;
-    const search = document.getElementById("searchInput") as HTMLInputElement;
-    const filter = document.getElementById(
-      "categoryFilter",
-    ) as HTMLSelectElement;
+    async function loadProducts() {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    if (
-      !container ||
-      !search ||
-      !filter ||
-      !modal ||
-      !modalTitle ||
-      !modalDesc ||
-      !modalPrice ||
-      !modalCategory ||
-      !modalWhatsapp
-    ) {
-      console.warn("Elementos del DOM no encontrados");
-    } else {
-      function whatsappLink(name: any[]) {
-        const text = `Hola! Quería consultar el precio de *${name}*`;
-        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      if (error) {
+        console.error("Error cargando productos:", error);
+        return;
       }
 
-      function render(list: any[]) {
-        container.innerHTML = "";
-
-        list.forEach((p) => {
-          const card = document.createElement("div");
-          card.className =
-            "group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 border border-neutral-100";
-
-          card.innerHTML = `
-          <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200">
-            <img
-              src="${p.image}"
-              alt="${p.name}"
-              class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-2"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <span class="absolute top-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em]
-                         bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg">
-              ${p.category}
-            </span>
-            ${p.status === "new" ? '<span class="absolute top-5 right-5 text-[10px] font-bold bg-amber-400 text-black px-3 py-1 rounded-full shadow-lg animate-pulse">NUEVO</span>' : ""}
-            ${p.status === "limited" ? '<span class="absolute top-5 right-5 text-[10px] font-bold bg-red-500 text-white px-3 py-1 rounded-full shadow-lg">¡ÚLTIMOS!</span>' : ""}
-          </div>
-
-          <div class="p-6">
-            <h4 class="text-xl font-black tracking-tight text-neutral-900">${p.name}</h4>
-            <p class="text-green-700 font-black text-2xl mt-3">${p.price}</p>
-
-            <div class="mt-6 grid gap-3">
-              <a
-                href="${whatsappLink(p.name)}"
-                target="_blank"
-                class="text-center bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
-                       text-white py-4 rounded-2xl text-sm font-black uppercase tracking-wide
-                       transition-all duration-300 active:scale-[0.96] shadow-lg shadow-green-600/30 hover:shadow-xl hover:shadow-green-600/40"
-              >
-                💬 Consultar por WhatsApp
-              </a>
-            </div>
-          </div>
-        `;
-
-          container.appendChild(card);
-        });
-      }
-
-      function applyFilters() {
-        const s = search.value.toLowerCase();
-        const c = filter.value;
-
-        render(
-          products.filter(
-            (p) =>
-              p.name.toLowerCase().includes(s) &&
-              (c === "all" || p.category === c),
-          ),
-        );
-      }
-
-      search.addEventListener("input", applyFilters);
-      filter.addEventListener("change", applyFilters);
-
+      products = data;
       render(products);
     }
+
+    function whatsappLink(name) {
+      const text = `Hola! Quería consultar el precio de *${name}*`;
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    }
+
+    function render(list) {
+      container.innerHTML = "";
+
+      list.forEach((p) => {
+        const card = document.createElement("div");
+        card.className =
+          "group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 border border-neutral-100";
+
+        card.innerHTML = `
+        <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200">
+          <img
+            src="${p.image}"
+            alt="${p.name}"
+            class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-2"
+          />
+          <span class="absolute top-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em]
+            bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg">
+            ${p.category}
+          </span>
+
+          ${
+            p.status === "new"
+              ? `<span class="absolute top-5 right-5 text-[10px] font-bold bg-amber-400 text-black px-3 py-1 rounded-full shadow-lg animate-pulse">NUEVO</span>`
+              : ""
+          }
+
+          ${
+            p.status === "limited"
+              ? `<span class="absolute top-5 right-5 text-[10px] font-bold bg-red-500 text-white px-3 py-1 rounded-full shadow-lg">¡ÚLTIMOS!</span>`
+              : ""
+          }
+        </div>
+
+        <div class="p-6">
+          <h4 class="text-xl font-black tracking-tight text-neutral-900">${p.name}</h4>
+          <p class="text-green-700 font-black text-2xl mt-3">$${p.price}</p>
+
+          <div class="mt-6">
+            <a
+              href="${whatsappLink(p.name)}"
+              target="_blank"
+              class="block text-center bg-gradient-to-r from-green-600 to-emerald-600
+                     text-white py-4 rounded-2xl text-sm font-black uppercase tracking-wide
+                     shadow-lg shadow-green-600/30"
+            >
+              💬 Consultar por WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      const s = search.value.toLowerCase();
+      const c = filter.value;
+
+      render(
+        products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(s) &&
+            (c === "all" || p.category === c),
+        ),
+      );
+    }
+
+    search.addEventListener("input", applyFilters);
+    filter.addEventListener("change", applyFilters);
+
+    loadProducts();
   </script>
 
   <footer
