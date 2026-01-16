@@ -208,7 +208,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   <!-- JS -->
   <script type="module">
-    import { supabase } from "../lib/supabase";
+    import { supabase } from "/src/lib/supabase.ts";
 
     const WHATSAPP_NUMBER = "5493834053417";
     let products = [];
@@ -233,7 +233,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
 
     function whatsappLink(name) {
-      const text = `Hola! Quería consultar el precio de *${name}*`;
+      const text = `Hola. Me interesa el producto "${name}". ¿Podrías darme más información, por favor?`;
       return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     }
 
