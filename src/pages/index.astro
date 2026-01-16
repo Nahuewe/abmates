@@ -1,8 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import { supabase } from "../lib/supabase";
 
 const WHATSAPP_NUMBER = "5493834053417";
+const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ---
 
 <MainLayout title="AB Mates | Catalogo">
@@ -210,7 +211,13 @@ const WHATSAPP_NUMBER = "5493834053417";
   </div>
 
   <!-- JS -->
-  <script define:vars={{ supabase, WHATSAPP_NUMBER }}>
+  <script define:vars={{ WHATSAPP_NUMBER, SUPABASE_URL, SUPABASE_KEY }}>
+    // Importar createClient desde el CDN
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    // Crear cliente de Supabase en el navegador
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
     let products = [];
 
     const container = document.getElementById("products");
