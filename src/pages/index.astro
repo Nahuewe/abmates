@@ -210,12 +210,24 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     </div>
   </div>
 
-  <!-- JS -->
-  <script define:vars={{ WHATSAPP_NUMBER, SUPABASE_URL, SUPABASE_KEY }}>
-    // Importar createClient desde el CDN
+  <!-- Configuración para el script -->
+  <script is:inline define:vars={{ WHATSAPP_NUMBER, SUPABASE_URL, SUPABASE_KEY }}>
+    window.APP_CONFIG = {
+      WHATSAPP_NUMBER,
+      SUPABASE_URL,
+      SUPABASE_KEY
+    };
+  </script>
+
+  <!-- JS Principal -->
+  <script type="module">
+    // Importar Supabase
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    // Crear cliente de Supabase en el navegador
+    // Obtener configuración
+    const { WHATSAPP_NUMBER, SUPABASE_URL, SUPABASE_KEY } = window.APP_CONFIG;
+
+    // Crear cliente de Supabase
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let products = [];
