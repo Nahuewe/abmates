@@ -294,7 +294,11 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
         <div class="p-6">
           <h4 class="text-xl font-black tracking-tight text-[#4A1F0E]">${p.name}</h4>
-          <p class="text-[#8B3E1E] font-black text-2xl mt-3">$${p.price}</p>
+          <p class="text-[#8B3E1E] font-black text-2xl mt-3">${
+            p.price != null
+              ? `<p class="text-[#8B3E1E] font-black text-2xl mt-3">$${p.price}</p>`
+              : ""
+          }
 
           <div class="mt-6">
             <a
