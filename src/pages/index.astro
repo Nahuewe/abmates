@@ -1,4 +1,6 @@
 ---
+import Footer from "../layouts/Footer.astro";
+import Header from "../layouts/Header.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const WHATSAPP_NUMBER = "5493834053417";
@@ -7,77 +9,7 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ---
 
 <MainLayout title="AB Mates | Catalogo">
-  <!-- HEADER -->
-  <header
-    class="sticky top-0 z-40 bg-[#4A1F0E]/90 backdrop-blur-md border-b border-white/10 shadow-xl"
-  >
-    <div class="max-w-7xl mx-auto px-4 py-5 flex items-center gap-4">
-      <div class="relative">
-        <div
-          class="absolute inset-0 bg-[#C46A3A] rounded-full blur-md opacity-40"
-        >
-        </div>
-        <img
-          src="/abmates.jpg"
-          class="relative h-14 w-14 rounded-full shadow-2xl ring-4 ring-[#C46A3A]/40"
-        />
-      </div>
-      <div class="leading-tight">
-        <h1 class="font-black tracking-tight text-2xl text-white">AB Mates</h1>
-        <p class="text-sm text-[#F3E7DF]/80 font-medium">
-          Mates • Termos • Accesorios
-        </p>
-      </div>
-
-      <div class="ml-auto flex items-center gap-3">
-        <!-- Instagram -->
-        <a
-          href="https://www.instagram.com/abma_tes/"
-          target="_blank"
-          aria-label="Instagram AB Mates"
-          class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#C46A3A]
-           flex items-center justify-center text-white transition
-           hover:scale-105 active:scale-95"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5z"
-            ></path>
-            <path
-              d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 1.5a3.5 3.5 0 110 7 3.5 3.5 0 010-7z"
-            ></path>
-            <circle cx="17.5" cy="6.5" r="1.25"></circle>
-          </svg>
-        </a>
-
-        <!-- Facebook -->
-        <a
-          href="https://www.facebook.com/share/1CRudN6Zea/"
-          target="_blank"
-          aria-label="Facebook AB Mates"
-          class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#8B3E1E]
-           flex items-center justify-center text-white transition
-           hover:scale-105 active:scale-95"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              d="M13.5 9H16V6h-2.5C10.57 6 9 7.57 9 10.5V12H7v3h2v6h3v-6h2.25l.75-3H12v-1.5c0-.83.17-1.5 1.5-1.5z"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </header>
+  <Header />
 
   <!-- HERO -->
   <section
@@ -125,7 +57,7 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
   <!-- FILTROS -->
   <section class="px-4 -mt-8 relative z-10">
     <div
-      class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-6 grid gap-4 sm:grid-cols-2 border border-[#F3E7DF]"
+      class="max-w-4xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-6 grid gap-4 sm:grid-cols-2 border border-white/40"
     >
       <div class="relative">
         <svg
@@ -173,47 +105,6 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     </div>
   </main>
 
-  <!-- MODAL -->
-  <div
-    id="modal"
-    class="fixed inset-0 hidden bg-black/70 backdrop-blur-md z-50
-           items-end sm:items-center justify-center"
-  >
-    <div
-      class="bg-white w-full sm:max-w-xl rounded-t-[2.8rem] sm:rounded-[2.8rem]
-         overflow-hidden shadow-2xl animate-slide"
-    >
-      <div class="p-7">
-        <span
-          id="modalCategory"
-          class="inline-block mb-4 text-[11px] uppercase tracking-widest
-                 bg-linear-to-r from-[#8B3E1E] to-[#C46A3A] text-white px-4 py-1.5 rounded-full font-bold"
-        ></span>
-
-        <h3 id="modalTitle" class="text-3xl font-black tracking-tight"></h3>
-
-        <p
-          id="modalDesc"
-          class="text-[#4A1F0E]/70 mt-4 text-sm leading-relaxed"
-        >
-        </p>
-
-        <p id="modalPrice" class="text-4xl font-black text-[#8B3E1E] mt-6"></p>
-
-        <a
-          id="modalWhatsapp"
-          target="_blank"
-          class="mt-8 block w-full text-center
-         bg-linear-to-r from-[#8B3E1E] to-[#C46A3A] hover:from-[#7A3418] hover:to-[#B85E2F]
-         text-white font-black py-4 rounded-2xl uppercase tracking-wide
-         transition-all active:scale-[0.97] shadow-lg shadow-[#8B3E1E]/30"
-        >
-          💬 Consultar por WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Configuración para el script -->
   <script
     is:inline
@@ -226,7 +117,6 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     };
   </script>
 
-  <!-- JS Principal -->
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -337,86 +227,5 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     loadProducts();
   </script>
 
-  <footer
-    class="bg-[#4A1F0E] text-white pt-16 pb-8 border-t border-[#8B3E1E]/40"
-  >
-    <div class="max-w-7xl mx-auto px-4">
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 border-b border-[#8B3E1E]/40 pb-12"
-      >
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <img
-              src="/abmates.jpg"
-              class="h-10 w-10 rounded-full ring-2 ring-[#C46A3A]/50"
-              alt="Logo"
-            />
-            <h4 class="text-2xl font-black text-[#C46A3A]">AB Mates</h4>
-          </div>
-          <p class="text-[#F3E7DF]/70 text-sm leading-relaxed max-w-xs">
-            Llevamos la tradición argentina a tu mesa con productos
-            seleccionados de alta calidad. Envíos a todo el país desde
-            Catamarca.
-          </p>
-        </div>
-
-        <div>
-          <h4
-            class="text-xs font-bold uppercase tracking-[0.2em] text-[#F3E7DF]/60 mb-6"
-          >
-            Aceptamos
-          </h4>
-          <div class="flex flex-wrap gap-3">
-            <div
-              class="bg-[#8B3E1E]/30 border border-[#8B3E1E]/40 px-4 py-2 rounded-xl text-xs font-medium text-[#F3E7DF]"
-            >
-              Transferencia
-            </div>
-            <div
-              class="bg-[#8B3E1E]/30 border border-[#8B3E1E]/40 px-4 py-2 rounded-xl text-xs font-medium text-[#F3E7DF]"
-            >
-              Mercado Pago
-            </div>
-            <div
-              class="bg-[#8B3E1E]/30 border border-[#8B3E1E]/40 px-4 py-2 rounded-xl text-xs font-medium text-[#F3E7DF]"
-            >
-              Efectivo
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h4
-            class="text-xs font-bold uppercase tracking-[0.2em] text-[#F3E7DF]/60 mb-6"
-          >
-            Contacto
-          </h4>
-          <ul class="space-y-3 text-sm text-[#F3E7DF]/80">
-            <li class="flex items-center gap-2">
-              <span class="text-[#C46A3A]">📍</span> Catamarca, Argentina
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="text-[#C46A3A]">✉️</span> info@abmates.com
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="text-[#C46A3A]">⏰</span> Lun a Sáb: 09:00 - 20:00
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div
-        class="flex flex-col md:flex-row justify-between items-center gap-4 text-[#F3E7DF]/40 text-[10px] uppercase tracking-widest font-bold"
-      >
-        <p>© 2026 AB Mates • Hecho con pasión por el mate</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-[#C46A3A] transition-colors">Términos</a
-          >
-          <a href="#" class="hover:text-[#C46A3A] transition-colors"
-            >Privacidad</a
-          >
-        </div>
-      </div>
-    </div>
-  </footer>
+  <Footer />
 </MainLayout>
