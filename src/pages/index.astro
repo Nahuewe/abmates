@@ -8,57 +8,96 @@ const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ---
 
-<MainLayout title="AB Mates | Catalogo">
+<MainLayout title="AB Mates | Catálogo">
   <Header />
+
+  <section
+    class="bg-[#4A1F0E] text-white/80 text-xs font-semibold tracking-wide"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap gap-x-6 gap-y-2 justify-center"
+    >
+      <span class="flex items-center gap-2"
+        >💳 Transferencia y Mercado Pago</span
+      >
+      <span class="flex items-center gap-2">⭐ Productos artesanales</span>
+      <span class="flex items-center gap-2">📦 Stock inmediato</span>
+    </div>
+  </section>
 
   <!-- HERO -->
   <section
-    class="px-4 pt-20 pb-16 text-center relative overflow-hidden bg-linear-to-b from-[#F3E7DF] via-[#F9F1EB] to-white"
+    class="relative overflow-hidden px-4 pt-24 pb-20 text-center bg-linear-to-b from-[#F3E7DF] via-[#F9F1EB] to-white"
   >
-    <div class="absolute inset-0 opacity-40">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
       <div
-        class="absolute top-20 left-1/4 w-96 h-96 bg-[#C46A3A]/40 rounded-full mix-blend-multiply filter blur-3xl"
+        class="absolute top-20 left-1/4 w-md h-112 bg-[#C46A3A]/40 rounded-full mix-blend-multiply filter blur-3xl"
       >
       </div>
       <div
-        class="absolute bottom-0 right-1/4 w-96 h-96 bg-[#8B3E1E]/30 rounded-full mix-blend-multiply filter blur-3xl"
+        class="absolute bottom-0 right-1/4 w-md h-112 bg-[#8B3E1E]/30 rounded-full mix-blend-multiply filter blur-3xl"
       >
       </div>
     </div>
 
-    <div class="relative">
+    <div class="relative max-w-3xl mx-auto">
       <span
-        class="inline-block mb-6 text-xs font-bold uppercase tracking-[0.3em] text-[#8B3E1E] bg-[#F3E7DF] px-5 py-2 rounded-full border border-[#C46A3A]/30"
+        class="inline-flex items-center gap-2 mb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#8B3E1E] bg-white/70 px-6 py-2 rounded-full border border-[#C46A3A]/30 shadow"
       >
-        Catálogo artesanal
+        Catálogo artesanal argentino
       </span>
 
       <h2
-        class="text-5xl sm:text-7xl font-black mb-6 leading-[1.1] tracking-tight"
+        class="text-5xl sm:text-7xl font-black mb-6 leading-[1.05] tracking-tight"
       >
         Viví el ritual<br />
         <span
           class="bg-linear-to-r from-[#8B3E1E] via-[#A24B28] to-[#C46A3A] bg-clip-text text-transparent"
-          >del mate</span
         >
+          del mate
+        </span>
       </h2>
 
       <p
         class="text-[#4A1F0E]/80 text-lg max-w-2xl mx-auto leading-relaxed font-medium"
       >
         Productos seleccionados para acompañarte todos los días.<br />
-        <span class="text-[#8B3E1E]"
+        <span class="text-[#8B3E1E] font-semibold"
           >Diseño, calidad y tradición argentina.</span
         >
       </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
+          target="_blank"
+          class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-2xl
+          bg-linear-to-r from-[#8B3E1E] to-[#C46A3A]
+          text-white text-sm font-black uppercase tracking-wide
+          shadow-xl shadow-[#8B3E1E]/30 hover:scale-[1.03] transition"
+        >
+          💬 Consultar por WhatsApp
+        </a>
+
+        <a
+          href="#productos"
+          class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-2xl
+          bg-white text-[#8B3E1E] border-2 border-[#C46A3A]/40
+          text-sm font-black uppercase tracking-wide
+          shadow hover:bg-[#F9F1EB] transition"
+        >
+          Ver catálogo
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- FILTROS -->
-  <section class="px-4 -mt-8 relative z-10">
+  <section id="productos" class="px-4 -mt-10 relative z-10">
     <div
-      class="max-w-4xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-6 grid gap-4 sm:grid-cols-2 border border-white/40"
+      class="max-w-5xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-6 grid gap-4 sm:grid-cols-[1fr_auto_auto] items-center border border-white/40"
     >
+      <!-- SEARCH -->
       <div class="relative">
         <svg
           class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B3E1E]/50"
@@ -81,6 +120,7 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
         />
       </div>
 
+      <!-- CATEGORY -->
       <select
         id="categoryFilter"
         class="px-5 py-4 rounded-2xl border-2 border-[#F3E7DF] text-sm font-medium
@@ -93,15 +133,57 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
         <option value="bombilla">Bombillas</option>
         <option value="vaso">Vasos</option>
       </select>
+
+      <!-- COUNTER -->
+      <div
+        id="resultCount"
+        class="hidden sm:flex items-center justify-center px-5 py-4 rounded-2xl bg-[#F3E7DF]/60 border border-[#C46A3A]/30 text-xs font-black uppercase tracking-wider text-[#8B3E1E]"
+      >
+        0 productos
+      </div>
+    </div>
+
+    <!-- ACTIVE FILTERS -->
+    <div
+      id="activeFilters"
+      class="max-w-5xl mx-auto mt-4 flex flex-wrap gap-3 text-xs font-bold"
+    >
     </div>
   </section>
 
   <!-- PRODUCTOS -->
-  <main class="px-4 py-12">
+  <main class="px-4 py-14">
     <div
       id="products"
-      class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
+      class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
     >
+      {
+        Array.from({ length: 6 }).map(() => (
+          <div class="animate-pulse bg-white rounded-3xl shadow-xl overflow-hidden border border-[#F3E7DF]">
+            <div class="aspect-4/5 bg-[#F3E7DF]" />
+            <div class="p-6 space-y-4">
+              <div class="h-5 w-2/3 bg-[#F3E7DF] rounded" />
+              <div class="h-4 w-1/3 bg-[#F3E7DF] rounded" />
+              <div class="h-10 bg-[#F3E7DF] rounded-xl" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="hidden max-w-xl mx-auto text-center py-20">
+      <div
+        class="w-24 h-24 mx-auto mb-6 rounded-full bg-[#F3E7DF] flex items-center justify-center text-4xl"
+      >
+        🔍
+      </div>
+      <h3 class="text-2xl font-black text-[#4A1F0E] mb-2">
+        No encontramos productos
+      </h3>
+      <p class="text-[#8B3E1E]/70 text-sm">
+        Probá cambiar la búsqueda o los filtros.
+      </p>
     </div>
   </main>
 
@@ -126,8 +208,11 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     let products = [];
 
     const container = document.getElementById("products");
+    const emptyState = document.getElementById("emptyState");
     const search = document.getElementById("searchInput");
     const filter = document.getElementById("categoryFilter");
+    const resultCount = document.getElementById("resultCount");
+    const activeFilters = document.getElementById("activeFilters");
 
     async function loadProducts() {
       const { data, error } = await supabase
@@ -151,74 +236,168 @@ const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
     function render(list) {
       container.innerHTML = "";
+      emptyState.classList.toggle("hidden", list.length > 0);
+
+      resultCount.textContent = `${list.length} producto${
+        list.length === 1 ? "" : "s"
+      }`;
+      resultCount.classList.remove("hidden");
 
       list.forEach((p) => {
+        const isOut = p.status === "out_of_stock";
+
         const card = document.createElement("div");
         card.className =
-          "group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 border border-[#F3E7DF]";
+          "group relative bg-white rounded-3xl shadow-xl transition-all duration-300 overflow-hidden border border-[#F3E7DF] " +
+          (isOut
+            ? "opacity-70 grayscale cursor-not-allowed"
+            : "hover:shadow-2xl hover:-translate-y-2");
 
         card.innerHTML = `
-        <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#F9F1EB] to-[#F3E7DF]">
-          <img
-            src="${p.image}"
-            alt="${p.name}"
-            class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-1"
-          />
-          <span class="absolute top-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em]
-            bg-gradient-to-r from-[#8B3E1E] to-[#C46A3A] text-white px-4 py-2 rounded-full shadow-lg">
-            ${p.category}
-          </span>
+<div class="flex flex-col h-full group relative bg-white rounded-3xl shadow-xl transition-all duration-300 overflow-hidden border border-[#F3E7DF] ${
+          isOut
+            ? "opacity-70 grayscale cursor-not-allowed"
+            : "hover:shadow-2xl hover:-translate-y-2"
+        }">
+  <div class="relative aspect-[4/5] overflow-hidden bg-linear-to-br from-[#F9F1EB] to-[#F3E7DF]">
+    <img
+      src="${p.image}"
+      alt="${p.name}"
+      loading="lazy"
+      class="absolute inset-0 w-full h-full object-cover transition duration-700 ${
+        isOut ? "" : "group-hover:scale-105 group-hover:rotate-1"
+      }"
+    />
 
-          ${
-            p.status === "new"
-              ? `<span class="absolute top-5 right-5 text-[10px] font-bold bg-[#C46A3A] text-white px-3 py-1 rounded-full shadow-lg animate-pulse">NUEVO</span>`
+    <span class="absolute top-5 left-5 text-[10px] font-black uppercase tracking-[0.2em]
+      bg-linear-to-r from-[#8B3E1E] to-[#C46A3A] text-white px-4 py-2 rounded-full shadow-lg">
+      ${p.category}
+    </span>
+
+    ${
+      p.status === "new"
+        ? `<span class="absolute top-5 right-5 text-[10px] font-black bg-[#C46A3A] text-white px-3 py-1 rounded-full shadow-lg animate-pulse">NUEVO</span>`
+        : ""
+    }
+
+    ${
+      p.status === "limited"
+        ? `<span class="absolute top-5 right-5 text-[10px] font-black bg-[#8B3E1E] text-white px-3 py-1 rounded-full shadow-lg">¡ÚLTIMOS!</span>`
+        : ""
+    }
+
+    ${
+      p.status === "out_of_stock"
+        ? `<span class="absolute top-5 right-5 text-[10px] font-black bg-red-600 text-white px-3 py-1 rounded-full shadow-lg">SIN STOCK</span>`
+        : ""
+    }
+
+    ${
+      p.discount
+        ? `<span class="absolute bottom-5 left-5 text-[10px] font-black bg-red-500 text-white px-3 py-1 rounded-full shadow-lg">-${p.discount}%</span>`
+        : ""
+    }
+
+    ${
+      isOut
+        ? `<div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+             <span class="px-5 py-3 rounded-xl bg-white/90 text-red-600 text-xs font-black uppercase tracking-wide shadow">
+               No disponible
+             </span>
+           </div>`
+        : ""
+    }
+  </div>
+
+    <!-- BODY -->
+    <div class="flex flex-col flex-1 p-5">
+      <h4 class="text-lg font-black tracking-tight text-[#4A1F0E] line-clamp-2 min-h-[2.5rem]">
+        ${p.name}
+      </h4>
+
+      <p class="mt-2 text-[#8B3E1E] font-black text-xl min-h-[1.75rem]">
+        ${p.price != null ? `$${p.price}` : "Consultar precio"}
+      </p>
+
+      <p class="mt-1 text-[11px] font-black uppercase tracking-wide min-h-[1rem] ${
+        isOut ? "text-red-600" : "text-[#8B3E1E]"
+      }">
+        ${
+          isOut
+            ? "Producto agotado"
+            : p.stock && p.stock <= 3
+              ? `Quedan ${p.stock} unidades`
               : ""
-          }
+        }
+      </p>
 
-          ${
-            p.status === "limited"
-              ? `<span class="absolute top-5 right-5 text-[10px] font-bold bg-[#8B3E1E] text-white px-3 py-1 rounded-full shadow-lg">¡ÚLTIMOS!</span>`
-              : ""
-          }
-        </div>
-
-        <div class="p-6">
-          <h4 class="text-xl font-black tracking-tight text-[#4A1F0E]">${p.name}</h4>
-          <p class="text-[#8B3E1E] font-black text-2xl mt-3">${
-            p.price != null
-              ? `<p class="text-[#8B3E1E] font-black text-2xl mt-3">$${p.price}</p>`
-              : ""
-          }
-
-          <div class="mt-6">
-            <a
-              href="${whatsappLink(p.name)}"
-              target="_blank"
-              class="block text-center bg-gradient-to-r from-[#8B3E1E] to-[#C46A3A]
-                     text-white py-4 rounded-2xl text-sm font-black uppercase tracking-wide
-                     shadow-lg shadow-[#8B3E1E]/30"
-            >
-              💬 Consultar por WhatsApp
-            </a>
-          </div>
-        </div>
-      `;
-
+      <!-- CTA -->
+      <div class="mt-auto pt-3">
+        ${
+          isOut
+            ? `<button
+                disabled
+                class="block w-full text-center bg-gray-300 text-gray-600 py-3 rounded-xl text-xs font-black uppercase tracking-wide cursor-not-allowed"
+              >
+                Sin stock
+              </button>`
+            : `<a
+                href="${whatsappLink(p.name)}"
+                target="_blank"
+                class="block text-center bg-linear-to-r from-[#8B3E1E] to-[#C46A3A]
+                      text-white py-3 rounded-xl text-xs font-black uppercase tracking-wide
+                      shadow-lg shadow-[#8B3E1E]/30 hover:scale-[1.02] transition"
+              >
+                💬 Consultar por WhatsApp
+              </a>`
+        }
+      </div>
+    </div>
+    </div>
+`;
         container.appendChild(card);
       });
+    }
+
+    function renderActiveFilters() {
+      activeFilters.innerHTML = "";
+
+      if (search.value) {
+        const chip = document.createElement("button");
+        chip.className =
+          "px-4 py-2 rounded-full bg-[#F3E7DF] border border-[#C46A3A]/30 text-[#8B3E1E] flex items-center gap-2 hover:bg-[#F9F1EB] transition";
+        chip.innerHTML = `🔎 "${search.value}" ✕`;
+        chip.onclick = () => {
+          search.value = "";
+          applyFilters();
+        };
+        activeFilters.appendChild(chip);
+      }
+
+      if (filter.value !== "all") {
+        const chip = document.createElement("button");
+        chip.className =
+          "px-4 py-2 rounded-full bg-[#F3E7DF] border border-[#C46A3A]/30 text-[#8B3E1E] flex items-center gap-2 hover:bg-[#F9F1EB] transition";
+        chip.innerHTML = `📂 ${filter.options[filter.selectedIndex].text} ✕`;
+        chip.onclick = () => {
+          filter.value = "all";
+          applyFilters();
+        };
+        activeFilters.appendChild(chip);
+      }
     }
 
     function applyFilters() {
       const s = search.value.toLowerCase();
       const c = filter.value;
 
-      render(
-        products.filter(
-          (p) =>
-            p.name.toLowerCase().includes(s) &&
-            (c === "all" || p.category === c),
-        ),
+      const filtered = products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(s) && (c === "all" || p.category === c),
       );
+
+      render(filtered);
+      renderActiveFilters();
     }
 
     search.addEventListener("input", applyFilters);
